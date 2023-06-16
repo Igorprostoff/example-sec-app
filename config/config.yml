@@ -1,0 +1,13 @@
+app:
+  name: 'securewebapp'
+  version: '1.0.0'
+
+http:
+  port: '8080'
+
+logger:
+  log_level: 'debug'
+  rollbar_env: 'securewebapp'
+
+postgres:
+  pool_max: 2

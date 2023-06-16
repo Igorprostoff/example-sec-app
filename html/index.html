@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <script>
+            function login() {
+                let csrfToken = document.getElementsByName("gorilla.csrf.Token")[0].value
+                
+
+                fetch('https://localhost:8080/v1/login', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-CSRF-Token": csrfToken
+                },
+                body: JSON.stringify({ "email": document.getElementById('email').value, "password":document.getElementById('password').value })
+                }).then(response => response.json())
+                .then(response => console.log(JSON.stringify(response)))
+
+            }
+        </script>
+        {{ .csrfField }} 
+    </head>
+    <body>
+        <div>
+            <form action="/v1/login" method="post">
+                <div class="container">
+                  <label for="email"><b>Email</b></label>
+                  <input id="email" type="text" placeholder="Enter email" name="email" required>
+              
+                  <label for="psw"><b>Password</b></label>
+                  <input id="password" type="password" placeholder="Enter Password" name="password" required>
+              
+                  <button type="button" onclick="login()">Login</button>
+                  
+                </div>
+
+              </form>
+        </div>
+    </body>
+</html>
+

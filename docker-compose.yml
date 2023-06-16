@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+
+  postgres:
+    container_name: postgres
+    image: postgres:14
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: '${POSTGRES_USER}'
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD}'
+      POSTGRES_DB: '${POSTGRES_DB}'
+    ports:
+      - 5432:5432
+
+  app:
+    container_name: webapp
+    image: webapp
+    environment:
+      PG_URL: '${PG_URL}'
+      TLS_CERT: '${TLS_CERT}'
+      TLS_KEY: '${TLS_KEY}'
+      CSRF_SECRET: '${CSRF_SECRET}'
+      COOKIE_SECRET: '${COOKIE_SECRET}'
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+
+volumes:
+  pg-data:
